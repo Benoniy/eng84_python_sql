@@ -3,10 +3,10 @@ import pyodbc
 from nw_products import NwProducts
 
 # Define important connection variables
-ip = "18.135.103.95"
-database = "Northwind"
-uname = "SA"
-passwd = "Passw0rd2018"
+ip = "XXX"
+database = "XXX"
+uname = "XXX"
+passwd = "XXX"
 
 # Define the connection settings
 connection = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};' +
@@ -15,8 +15,11 @@ connection = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};' +
 
 if __name__ == "__main__":
     stock = NwProducts("Products", connection)
-    stock.count_stock("Chai")
-    print(stock.count_stock("Aniseed Syrup"))
+    print(stock.count_stock("Chai"))
+    stock.update_stock("Chai", 14)
+
+
+    del stock;
 
 
 

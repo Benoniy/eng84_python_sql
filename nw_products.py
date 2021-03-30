@@ -11,6 +11,9 @@ class NwProducts:
         self.cursor = connection.cursor()
         self.__gen_table(table_name)
 
+    def __del__(self):
+        self.database.close()
+
     # This is because I don't actually want to use the real table
     def __gen_table(self, table_name):
         try:  # Try and print the contents of the table
@@ -31,7 +34,7 @@ class NwProducts:
         return row[0]
 
     def update_stock(self, product, count):
-        pass
+        self.cursor.execute(f"UPDATE {self.table_name} SET UnitsInStock={count} WHERE ProductName = '{product}';")
 
     def subtract_stock(self, product, count):
         pass
