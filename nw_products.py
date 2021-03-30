@@ -31,13 +31,19 @@ class NwProducts:
 
     def count_stock(self, product):
         row = self.__fetch_single(f"SELECT UnitsInStock FROM {self.table_name} WHERE ProductName = '{product}';")
+        if row is None:
+            return "Result table empty"
         return row[0]
 
     def update_stock(self, product, count):
         self.cursor.execute(f"UPDATE {self.table_name} SET UnitsInStock={count} WHERE ProductName = '{product}';")
 
-    def subtract_stock(self, product, count):
-        pass
-
     def add_stock(self, product, count):
-        pass
+        orig = self.count_stock(product)
+        self.update_stock(product, orig + count)
+
+    def subtract_stock(self, product, count):
+        self.add_stock(product, -count)
+
+    def delete_product(self, product):
+        self.cursor.execute(f"DELETE FROM {self.table_name} WHERE ProductName = '{product}'")
