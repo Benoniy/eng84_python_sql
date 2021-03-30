@@ -1,4 +1,4 @@
-import pyodbc
+from pyodbc import ProgrammingError
 
 
 # backup_Products is a backup of Products I made
@@ -18,7 +18,7 @@ class NwProducts:
     def __gen_table(self, table_name):
         try:  # Try and print the contents of the table
             print(self.__fetch_rows(f"SELECT * FROM {self.table_name};"))
-        except pyodbc.ProgrammingError:  # If it doesnt exist then clone the original
+        except ProgrammingError:  # If it doesnt exist then clone the original
             self.cursor.execute(f"SELECT * INTO {self.table_name} FROM {table_name};")
         finally:  # Try and print it again
             print(self.__fetch_rows(f"SELECT * FROM {self.table_name};"))
